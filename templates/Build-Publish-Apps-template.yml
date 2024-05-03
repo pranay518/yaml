@@ -1,0 +1,28 @@
+parameters:
+  - name: Buildtype
+    type: string
+jobs:
+- job: BuildOnWindows
+  pool: '$(windows_pool)'
+  steps:
+    - task: PowerShell@2
+      inputs:
+        targetType: 'inline'
+        script: |
+            write-host "Build the Application On windows"
+- job: BuildOnLinux
+  pool: '$(linux_pool)'
+  steps:
+    - task: PowerShell@2
+      inputs:
+        targetType: 'inline'
+        script: |
+            write-host "Build the Application On Linux"
+- job: BuildOnMac
+  pool: '$(mac_pool)'
+  steps:
+    - task: PowerShell@2
+      inputs:
+        targetType: 'inline'
+        script: |
+            write-host "Build the Application On Mac"

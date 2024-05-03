@@ -1,0 +1,47 @@
+---
+parameters:
+  - name: Buildtype
+    type: string
+stages:
+  - stage: build
+    # variables:
+    #   - group: ${{ parameters.variableGroup }}
+    jobs:
+      - job: 'ScanningCredential'
+        displayName: ScanningCredential
+        pool: '$(Windows_pool)'
+        steps:
+          - task: PowerShell@2
+            inputs:
+              targetType: 'inline'
+              script: |
+                write-host "Setup for Scanning Credential/Token/Secret"
+
+      - job: sonarqube
+        displayName: 'Prepare Analysis on SonarQube'
+        pool: '$(Linux_pool)'
+        steps:
+          - task: PowerShell@2
+            inputs:
+              targetType: 'inline'
+              script: |
+               write-host "Setup for Code Analysis"
+
+
+      - job: NexusIQ
+        displayName: NexusIQ
+        pool: '$(Linux_pool)'
+        steps:
+          - task: PowerShell@2
+            inputs:
+              targetType: 'inline'
+              script: |
+                write-host "Setup for SCA & SAST Scan"
+
+
+      - template: Build-Publish-Apps-template.yml  # Job Template Reference
+        parameters:
+          Buildtype: ${{ parameters.Buildtype }}
+          
+        
+...
