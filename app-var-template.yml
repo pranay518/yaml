@@ -1,0 +1,7 @@
+variables:
+  onMainBranch: ${{ eq(variables['Build.SourceBranchName'], 'main') }}
+  System.Debug: 'true'
+  NETVersion: '4.8.1'
+  Linux_pool: 'Default'
+  Windows_pool: 'Default'
+  mac_pool: 'Default'
